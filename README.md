@@ -20,7 +20,7 @@ Para desplegar este proyecto:
 
 ## Presentacion
 
-https://www.canva.com/design/DAFSEF9WJyQ/zbnxDR83Qw8mMeGIAKkAaw/edit?utm_content=DAFSEF9WJyQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+https://www.canva.com/design/DAFSEIkylR0/Z6kiA80Fxu-YRIGUrNGLDg/edit?utm_content=DAFSEIkylR0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ## Demo
 
