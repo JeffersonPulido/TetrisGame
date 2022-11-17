@@ -1,5 +1,20 @@
+@font-face {
+    font-family: gamer;
+    src: url(../fonts/Gamer.ttf);
+}
+@font-face {
+    font-family: digital;
+    src: url(../fonts/DS-DIGIT.TTF);
+}
+
 /*VARIBLES*/
 :root{
     /*COLORES*/
+    --azul: #661313;
     /*TIPOGRAFIA*/
+    --funete: 'digital';
+}
+
+h1{
+    font-family: var(--funete);
 }
