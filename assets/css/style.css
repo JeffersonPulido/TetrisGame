@@ -1,20 +1,180 @@
 @font-face {
-    font-family: gamer;
-    src: url(../fonts/Gamer.ttf);
+  font-family: gamer;
+  src: url(../fonts/Gamer.ttf);
 }
 @font-face {
-    font-family: digital;
-    src: url(../fonts/DS-DIGIT.TTF);
+  font-family: digital;
+  src: url(../fonts/DS-DIGIT.TTF);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    height: 100%;
 }
 
 /*VARIBLES*/
-:root{
-    /*COLORES*/
-    --azul: #661313;
-    /*TIPOGRAFIA*/
-    --funete: 'digital';
+:root {
+  /*COLORES*/
+  --blanco: #ffffff;
+  --negro: #000000;
+  --gris: #707070;
+  /*TIPOGRAFIA*/
+  --contador: "digital";
+  --texto: "gamer";
+  /*BOTONES*/
+  --button-height: 3rem;
+  --color-text: rgba(0, 0, 0, 0.411);
+  --color-text-shadow: rgba(255, 255, 255, 0.37);
+  --color-overlay-medium: rgba(0, 0, 0, 0.726);
+  --color-overlay-dark: rgba(0, 0, 0, 0.2);
+  --color-tab-focus: rgba(255, 255, 255, 0.15);
 }
 
-h1{
-    font-family: var(--funete);
+/*BACK GENERAL*/
+.general {
+    background-image: linear-gradient(to bottom, #560772, #4b046e, #3f026b, #320167, #230063, #2f005e, #380059, #3f0055, #53004f, #630047, #6f0040, #780839);
+}
+
+/*MODAL BIENVENIDA*/
+.logo {
+  width: 50%;
+}
+
+/*CONTENEDOR TOP*/
+
+.container-top {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.container-buttons-top {
+  font-family: var(--contador);
+  border: 2px solid var(--gris);
+  padding: 1%;
+}
+
+#puntaje {
+  font-family: var(--contador);
+  color: var(--blanco);
+  font-size: 30px;
+  border: 2px solid var(--gris);
+  padding: 1%;
+}
+
+/*TITLE*/
+.titleGeneral {
+  font-family: var(--texto);
+  font-size: 80px;
+  color: var(--blanco);
+  -webkit-text-stroke: 2px black;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 1),
+    0 0 30px rgba(255, 255, 255, 1), 0 0 40px #ff00de, 0 0 70px #ff00de,
+    0 0 80px #ff00de, 0 0 100px #ff00de;
+}
+
+.title {
+  font-family: var(--texto);
+  font-size: 30px;
+  color: black;
+}
+
+kbd {
+  font-size: 20px !important;
+}
+
+/*ESCENARIO CANVAS*/
+.canvasScene {
+  margin-top: 3.5vh;
+  margin-bottom: 3.5vh;
+  border: 5px solid var(--blanco);
+  box-shadow: 0px 0px 20px 5px #0ff, 0px 0px 40px 10px #ff00de;
+}
+
+/*BOTONES*/
+
+.green-button {
+  --color-bg: #00a07d;
+  --color-bg-light: #00af8a;
+  --color-bg-dark: #008f70;
+}
+
+.yellow-button {
+  --color-bg: #ffc054;
+  --color-bg-light: #ffd996;
+  --color-bg-dark: #f2aa30;
+}
+
+.retro-button {
+  position: relative;
+  appearance: none;
+  box-sizing: border-box;
+  font-size: calc(var(--button-height) / 3);
+  font-family: "Open Sans", sans-serif;
+  background: var(--color-bg);
+  height: var(--button-height);
+  min-width: var(--button-height);
+  border-radius: calc(var(--button-height) / 2);
+  border: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-shadow: 1px 1px var(--color-text-shadow);
+  cursor: pointer;
+  margin: 6px 6px;
+  letter-spacing: 0.1em;
+  transition: all 200ms ease;
+  box-shadow: -1px -1px 15px var(--color-bg),
+    0 0 0 4px var(--color-overlay-medium), 1px 1px 10px var(--color-bg-dark),
+    inset 0 0 0 var(--color-overlay-dark),
+    inset 0.5rem 0.5rem 0.15rem var(--color-bg-light);
+}
+
+.retro-button::-moz-focus-inner {
+  outline: none;
+  border: none;
+}
+
+.retro-button:focus {
+  outline: none;
+  box-shadow: -1px -1px 1px var(--color-bg-dark),
+    0 0 0 4px var(--color-tab-focus), 1px 1px 1px var(--color-bg-dark),
+    inset 0 0 0 var(--color-overlay-dark),
+    inset 0.5rem 0.5rem 0.35rem var(--color-bg-light);
+}
+
+.retro-button:hover {
+  box-shadow: -1px -1px 1px var(--color-bg-dark),
+    0 0 0 4px var(--color-overlay-dark), 1px 1px 1px var(--color-bg-dark),
+    inset 0 0 0 var(--color-overlay-dark),
+    inset 0.5rem 0.5rem 0.25rem var(--color-bg-light);
+}
+
+.retro-button:active {
+  box-shadow: inset 1px 1px 1px var(--color-bg),
+    0 0 0 4px var(--color-overlay-dark),
+    inset -1px -1px 1px var(--color-bg-light),
+    inset 0.5rem 0.5rem 0.75rem var(--color-bg-dark),
+    inset 0.5rem 0.5rem 0.5rem var(--color-bg-light);
+}
+
+.presentation-content {
+  text-align: center;
+}
+
+/* RESPONIVE */
+/* MOBILE */
+@media (max-width: 768px) {
+    /*ESCENARIO CANVAS*/
+    .canvasScene {
+        width: 100%;
+    }
+    /*TITLE*/
+    .titleGeneral {
+        font-size: 60px;
+    }
 }

@@ -1,8 +1,8 @@
 class Game {
     // Square length in pixels
     static SQUARE_LENGTH = screen.width > 420 ? 30 : 20;
-    static COLUMNS = 20;
-    static ROWS = 20;
+    static COLUMNS = 15;
+    static ROWS = 15;
     static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
     static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
     static EMPTY_COLOR = "#eaeaea";
@@ -51,6 +51,7 @@ class Game {
         this.init();
     }
 
+    //================= EJECUCION DEL JUEGO =================//
     init() {
         this.showWelcome();
         this.initDomElements();
@@ -58,6 +59,26 @@ class Game {
         this.resetGame();
         this.draw();
         this.initControls();
+    }
+    
+    //================= MODAL BIENVENIDA =================//
+    showWelcome() {
+        Swal.fire("<h1 class='title'>Bienvenidos</h1>",`
+        <strong class='title'>Controles:</strong>
+        <ul class="list-group">
+            <li class="list-group-item title"> <kbd>P</kbd><br>Pausar o reanudar </li>
+            <li class="list-group-item title"> <kbd>R</kbd><br>Rotar</li>
+            <li class="list-group-item title"> <kbd>Flechas de dirección</kbd><br>Mover figura hacia esa dirección</li>
+            <li class="list-group-item title"><strong>También puedes usar los botones si estás en móvil</strong></li>
+        </ul>
+        <hr>
+        <strong class='title'>Creado por:</strong>
+        <div class="d-flex">
+            <img src="../../assets/img/LogoJP.png" class="img-fluid logo" alt="">
+            <img src="../../assets/img/LogoLJ.png" class="img-fluid logo" alt="">
+            <img src="../../assets/img/LogoDD.png" class="img-fluid logo" alt="">
+        </div>
+        `);
     }
 
     resetGame() {
@@ -73,24 +94,6 @@ class Game {
         this.refreshScore();
         this.pauseGame();
     }
-
-    showWelcome() {
-        Swal.fire("Bienvenido", `Port casi perfecto del juego de Tetris en JavaScript.
-<br>
-<strong>Controles:</strong>
-<ul class="list-group">
-<li class="list-group-item"> <kbd>P</kbd><br>Pausar o reanudar </li>
-<li class="list-group-item"> <kbd>R</kbd><br>Rotar</li>
-<li class="list-group-item"> <kbd>Flechas de dirección</kbd><br>Mover figura hacia esa dirección</li>
-<li class="list-group-item"><strong>También puedes usar los botones si estás en móvil</strong></li>
-</ul>
-<strong>Creado por <a href="https://parzibyte.me/blog">Parzibyte</a></strong>
-<br>
-Gracias a <a target="_blank" href="https://www.youtube.com/channel/UCz6zvgkf6eKpgqlUZQstOtQ">Bulby</a> por la música de fondo
-y a <a href="https://freesound.org/people/grunz/sounds/109662/">Freesound.org</a> por el sonido al completar una línea
-`);
-    }
-
 
     initControls() {
         document.addEventListener("keydown", (e) => {
@@ -393,7 +396,7 @@ y a <a href="https://freesound.org/people/grunz/sounds/109662/">Freesound.org</a
     }
 
     refreshScore() {
-        this.$score.textContent = `Score: ${this.score}`;
+        this.$score.textContent = `SCORE: ${this.score}`;
     }
 
     initSounds() {
@@ -668,7 +671,6 @@ y a <a href="https://freesound.org/people/grunz/sounds/109662/">Freesound.org</a
 
 }
 
-
 class Utils {
     static getRandomNumberInRange = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -737,3 +739,6 @@ const game = new Game("canvas");
 document.querySelector("#reset").addEventListener("click", () => {
     game.askUserConfirmResetGame();
 });
+
+
+
