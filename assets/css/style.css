@@ -10,11 +10,61 @@
 /*VARIBLES*/
 :root{
     /*COLORES*/
-    --azul: #661313;
+    --blanco: #ffffff;
+    --negro: #000000; 
+    --gris: #707070;
     /*TIPOGRAFIA*/
-    --funete: 'digital';
+    --contador: 'digital';
+    --texto: 'gamer';
 }
 
-h1{
-    font-family: var(--funete);
+/*BACK GENERAL*/
+.general{
+    background-color: var(--negro);
+}
+
+/*MODAL BIENVENIDA*/
+.logo{
+    width: 50%;
+}
+
+/*CONTENEDOR TOP*/
+
+.container-top{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.container-buttons-top{
+    font-family: var(--contador);
+    border: 2px solid var(--gris);
+    padding: 1%;
+}
+
+#puntaje{
+    font-family: var(--contador);
+    color: var(--blanco);
+    font-size: 30px;
+    border: 2px solid var(--gris);
+    padding: 1%;
+}
+
+/*TITLE*/
+.titleGeneral{
+    font-family: var(--texto);
+    font-size: 80px;
+    color: var(--blanco);
+    -webkit-text-stroke: 2px black;
+    text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #ff00de , 0 0 70px #ff00de , 0 0 80px #ff00de , 0 0 100px #ff00de ;
+}
+
+.title{
+    font-family: var(--texto);
+    font-size: 30px;
+    color: black;
+}
+
+kbd{
+    font-size: 20px !important;
 }
