@@ -1,3 +1,0 @@
-//VARIBLES
-
-//FUNCIONES
