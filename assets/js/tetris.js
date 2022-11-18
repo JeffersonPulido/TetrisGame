@@ -1,19 +1,19 @@
-class Game {
-  // Square length in pixels
-  static SQUARE_LENGTH = screen.width > 420 ? 30 : 20;
-  static COLUMNS = 15;
-  static ROWS = 15;
-  static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
-  static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
-  static EMPTY_COLOR = "#eaeaea";
-  static BORDER_COLOR = "#ffffff";
-  static DELETED_ROW_COLOR = "#d81c38";
+class Juego {
+  // Longitud del cuadrado en pixeles
+  static longitud_cuadrado = screen.width > 420 ? 30 : 20;
+  static columnas = 15;
+  static filas = 15;
+  static ancho_canva = this.longitud_cuadrado * this.columnas;
+  static alto_canva = this.longitud_cuadrado * this.filas;
+  static color_vacio = "#eaeaea";
+  static color_borde = "#ffffff";
+  static color_fila_eliminada = "#d81c38";
   // When a piece collapses with something at its bottom, how many time wait for putting another piece? (in ms)
-  static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300;
+  static tiempo_nuevaPieza = 300;
   // Speed of falling piece (in ms)
-  static PIECE_SPEED = 300;
+  static velocidad_pieza = 300;
   // Animation time when a row is being deleted
-  static DELETE_ROW_ANIMATION = 500;
+  static tiempo_animacionDelete = 500;
   // Score to add when a square dissapears (for each square)
   static PER_SQUARE_SCORE = 1;
   static COLORS = [
@@ -53,12 +53,12 @@ class Game {
 
   //================= EJECUCION DEL JUEGO =================//
   init() {
-    this.showWelcome();
-    this.initDomElements();
-    this.initSounds();
-    this.resetGame();
-    this.draw();
-    this.initControls();
+    this.showWelcome();//JP
+    this.initDomElements();//JP
+    this.initSounds();//LJ
+    this.resetGame();//LJ
+    this.draw();//DD
+    this.initControls();//DD
   }
 
   //================= MODAL BIENVENIDA =================//
@@ -194,7 +194,7 @@ class Game {
     this.refreshScore();
     this.paused = false;
     this.canPlay = true;
-    this.intervalId = setInterval(this.mainLoop.bind(this), Game.PIECE_SPEED);
+    this.intervalId = setInterval(this.mainLoop.bind(this), Juego.velocidad_pieza);
   }
 
   moveFigurePointsToExistingPieces() {
@@ -238,25 +238,25 @@ class Game {
   changeDeletedRowColor(yCoordinates) {
     for (let y of yCoordinates) {
       for (const point of this.existingPieces[y]) {
-        point.color = Game.DELETED_ROW_COLOR;
+        point.color = Juego.color_fila_eliminada;
       }
     }
   }
 
   addScore(rows) {
-    if (Game.PIECE_SPEED > 0) {
-      Game.PIECE_SPEED -= rows.length * 20;
+    if (Juego.velocidad_pieza > 0) {
+      Juego.velocidad_pieza -= rows.length * 20;
       clearInterval(this.intervalId);
-      this.intervalId = setInterval(this.mainLoop.bind(this), Game.PIECE_SPEED);
+      this.intervalId = setInterval(this.mainLoop.bind(this), Juego.velocidad_pieza);
     }
-    this.score += Game.PER_SQUARE_SCORE * Game.COLUMNS * rows.length;
+    this.score += Juego.PER_SQUARE_SCORE * Juego.columnas * rows.length;
     this.refreshScore();
   }
 
   removeRowsFromExistingPieces(yCoordinates) {
     for (let y of yCoordinates) {
       for (const point of this.existingPieces[y]) {
-        point.color = Game.EMPTY_COLOR;
+        point.color = Juego.color_vacio;
         point.taken = false;
       }
     }
@@ -280,7 +280,7 @@ class Game {
       invertedCoordinates.reverse();
 
       for (let yCoordinate of invertedCoordinates) {
-        for (let y = Game.ROWS - 1; y >= 0; y--) {
+        for (let y = Juego.filas - 1; y >= 0; y--) {
           for (let x = 0; x < this.existingPieces[y].length; x++) {
             if (y < yCoordinate) {
               let counter = 0;
@@ -293,7 +293,7 @@ class Game {
                 this.existingPieces[auxiliarY + 1][x] =
                   this.existingPieces[auxiliarY][x];
                 this.existingPieces[auxiliarY][x] = {
-                  color: Game.EMPTY_COLOR,
+                  color: Juego.color_vacio,
                   taken: false,
                 };
 
@@ -308,7 +308,7 @@ class Game {
 
       this.syncExistingPiecesWithBoard();
       this.canPlay = true;
-    }, Game.DELETE_ROW_ANIMATION);
+    }, Juego.tiempo_animacionDelete);
   }
 
   mainLoop() {
@@ -347,16 +347,16 @@ class Game {
         this.verifyAndDeleteFullRows();
         this.chooseRandomFigure();
         this.syncExistingPiecesWithBoard();
-      }, Game.TIMEOUT_LOCK_PUT_NEXT_PIECE);
+      }, Juego.tiempo_nuevaPieza);
     }
     this.syncExistingPiecesWithBoard();
   }
 
   cleanGameBoardAndOverlapExistingPieces() {
-    for (let y = 0; y < Game.ROWS; y++) {
-      for (let x = 0; x < Game.COLUMNS; x++) {
+    for (let y = 0; y < Juego.filas; y++) {
+      for (let x = 0; x < Juego.columnas; x++) {
         this.board[y][x] = {
-          color: Game.EMPTY_COLOR,
+          color: Juego.color_vacio,
           taken: false,
         };
         // Overlap existing piece if any
@@ -390,20 +390,20 @@ class Game {
         this.canvasContext.fillRect(
           x,
           y,
-          Game.SQUARE_LENGTH,
-          Game.SQUARE_LENGTH
+          Juego.longitud_cuadrado,
+          Juego.longitud_cuadrado
         );
         this.canvasContext.restore();
-        this.canvasContext.strokeStyle = Game.BORDER_COLOR;
+        this.canvasContext.strokeStyle = Juego.color_borde;
         this.canvasContext.strokeRect(
           x,
           y,
-          Game.SQUARE_LENGTH,
-          Game.SQUARE_LENGTH
+          Juego.longitud_cuadrado,
+          Juego.longitud_cuadrado
         );
-        x += Game.SQUARE_LENGTH;
+        x += Juego.longitud_cuadrado;
       }
-      y += Game.SQUARE_LENGTH;
+      y += Juego.longitud_cuadrado;
     }
     setTimeout(() => {
       requestAnimationFrame(this.draw.bind(this));
@@ -433,8 +433,8 @@ class Game {
     this.$btnDown = document.querySelector("#btnAbajo");
     this.$btnRight = document.querySelector("#btnDerecha");
     this.$btnLeft = document.querySelector("#btnIzquierda");
-    this.$canvas.setAttribute("width", Game.CANVAS_WIDTH + "px");
-    this.$canvas.setAttribute("height", Game.CANVAS_HEIGHT + "px");
+    this.$canvas.setAttribute("width", Juego.ancho_canva + "px");
+    this.$canvas.setAttribute("height", Juego.alto_canva + "px");
     this.canvasContext = this.$canvas.getContext("2d");
   }
 
@@ -443,7 +443,7 @@ class Game {
   }
 
   restartGlobalXAndY() {
-    this.globalX = Math.floor(Game.COLUMNS / 2) - 1;
+    this.globalX = Math.floor(Juego.columnas / 2) - 1;
     this.globalY = 0;
   }
 
@@ -543,17 +543,17 @@ class Game {
   initBoardAndExistingPieces() {
     this.board = [];
     this.existingPieces = [];
-    for (let y = 0; y < Game.ROWS; y++) {
+    for (let y = 0; y < Juego.filas; y++) {
       this.board.push([]);
       this.existingPieces.push([]);
-      for (let x = 0; x < Game.COLUMNS; x++) {
+      for (let x = 0; x < Juego.columnas; x++) {
         this.board[y].push({
-          color: Game.EMPTY_COLOR,
+          color: Juego.color_vacio,
           taken: false,
         });
         this.existingPieces[y].push({
           taken: false,
-          color: Game.EMPTY_COLOR,
+          color: Juego.color_vacio,
         });
       }
     }
@@ -578,9 +578,9 @@ class Game {
   absolutePointOutOfLimits(absoluteX, absoluteY) {
     return (
       absoluteX < 0 ||
-      absoluteX > Game.COLUMNS - 1 ||
+      absoluteX > Juego.columnas - 1 ||
       absoluteY < 0 ||
-      absoluteY > Game.ROWS - 1
+      absoluteY > Juego.filas - 1
     );
   }
 
@@ -696,7 +696,7 @@ class Utils {
   };
 
   static getRandomColor() {
-    return Game.COLORS[Utils.getRandomNumberInRange(0, Game.COLORS.length - 1)];
+    return Juego.COLORS[Utils.getRandomNumberInRange(0, Juego.COLORS.length - 1)];
   }
 
   static loadSound(src, loop) {
@@ -753,7 +753,7 @@ class Tetromino {
   }
 }
 
-const game = new Game("canvas");
+const game = new Juego("canvas");
 document.querySelector("#reset").addEventListener("click", () => {
   game.askUserConfirmResetGame();
 });
