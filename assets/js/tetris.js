@@ -40,10 +40,10 @@ class Juego {
     this.canvasId = canvasId;
     this.timeoutFlag = false;
     this.board = [];
-    this.existingPieces = [];
+    this.piezasExistentes = [];
     this.globalX = 0;
     this.globalY = 0;
-    this.paused = true;
+    this.pausa = true;
     this.currentFigure = null;
     this.sounds = {};
     this.canPlay = false;
@@ -84,7 +84,7 @@ class Juego {
     );
   }
 
-  resetGame() {
+  resetJuego() {
     this.score = 0;// conteo
     this.sounds.success.currentTime = 0;
     this.sounds.success.pause();//llena fila
@@ -95,7 +95,7 @@ class Juego {
     this.reinicieGlobalXEY(); //restartGlobalXAndY - reinicie Global X e Y
     this.sincronizarPiezasExistentesConTablero();//sincronizar piezas existentes con tablero - syncExistingPiecesWithBoard
     this.refrescarElConteo();//refrescar el conteo - refreshScore
-    this.pauseGame();//pausar juego
+    this.pausarJuego();//pausar juego - pauseGame
   }
 
   initControls() {
@@ -119,7 +119,7 @@ class Juego {
           this.attemptRotate();
           break;
         case "KeyP":
-          this.pauseOrResumeGame();
+          this.pausarOReanudarElJuego();
           break;
       }
       this.sincronizarPiezasExistentesConTablero();
@@ -143,7 +143,7 @@ class Juego {
     });
     [this.$btnPause, this.$btnResume].forEach(($btn) =>
       $btn.addEventListener("click", () => {
-        this.pauseOrResumeGame();
+        this.pausarOReanudarElJuego();
       })
     );
   }
@@ -170,30 +170,30 @@ class Juego {
     this.rotateFigure();
   }
 
-  pauseOrResumeGame() {
-    if (this.paused) {
-      this.resumeGame();
+  pausarOReanudarElJuego() { //pausar o reanudar el juego - pauseOrResumeGame
+    if (this.pausa) {
+      this.reanudarElJuego();//reanudar el juego - resumeGame
       this.$btnResume.hidden = true;
       this.$btnPause.hidden = false;
     } else {
-      this.pauseGame();
+      this.pausarJuego();
       this.$btnResume.hidden = false;
       this.$btnPause.hidden = true;
     }
   }
 
-  pauseGame() {
+  pausarJuego() {
     this.sounds.background.pause();
-    this.paused = true;
+    this.pausa = true;
     this.canPlay = false;
     clearInterval(this.intervalId);
   }
 
-  resumeGame() {
+  reanudarElJuego() {
     this.sounds.background.play();
     this.refrescarElConteo();
-    this.paused = false;
-    this.canPlay = true;
+    this.pausa = false;//paused
+    this.canPlay = true;//canPlay - Poder jugar
     this.intervalId = setInterval(this.mainLoop.bind(this), Juego.velocidad_pieza);
   }
 
@@ -202,7 +202,7 @@ class Juego {
     for (const point of this.currentFigure.getPoints()) {
       point.x += this.globalX;
       point.y += this.globalY;
-      this.existingPieces[point.y][point.x] = {
+      this.piezasExistentes[point.y][point.x] = {
         taken: true,
         color: point.color,
       };
@@ -213,7 +213,7 @@ class Juego {
 
   playerLoses() {
     // Check if there's something at Y 1. Maybe it is not fair for the player, but it works
-    for (const point of this.existingPieces[1]) {
+    for (const point of this.piezasExistentes[1]) {
       if (point.taken) {
         return true;
       }
@@ -224,7 +224,7 @@ class Juego {
   getPointsToDelete = () => {
     const points = [];
     let y = 0;
-    for (const row of this.existingPieces) {
+    for (const row of this.piezasExistentes) {
       const isRowFull = row.every((point) => point.taken);
       if (isRowFull) {
         // We only need the Y coordinate
@@ -237,7 +237,7 @@ class Juego {
 
   changeDeletedRowColor(yCoordinates) {
     for (let y of yCoordinates) {
-      for (const point of this.existingPieces[y]) {
+      for (const point of this.piezasExistentes[y]) {
         point.color = Juego.color_fila_eliminada;
       }
     }
@@ -255,7 +255,7 @@ class Juego {
 
   removeRowsFromExistingPieces(yCoordinates) {
     for (let y of yCoordinates) {
-      for (const point of this.existingPieces[y]) {
+      for (const point of this.piezasExistentes[y]) {
         point.color = Juego.color_vacio;
         point.taken = false;
       }
@@ -281,7 +281,7 @@ class Juego {
 
       for (let yCoordinate of invertedCoordinates) {
         for (let y = Juego.filas - 1; y >= 0; y--) {
-          for (let x = 0; x < this.existingPieces[y].length; x++) {
+          for (let x = 0; x < this.piezasExistentes[y].length; x++) {
             if (y < yCoordinate) {
               let counter = 0;
               let auxiliarY = y;
@@ -290,9 +290,9 @@ class Juego {
                 !this.absolutePointOutOfLimits(x, auxiliarY + 1) &&
                 counter < yCoordinates.length
               ) {
-                this.existingPieces[auxiliarY + 1][x] =
-                  this.existingPieces[auxiliarY][x];
-                this.existingPieces[auxiliarY][x] = {
+                this.piezasExistentes[auxiliarY + 1][x] =
+                  this.piezasExistentes[auxiliarY][x];
+                this.piezasExistentes[auxiliarY][x] = {
                   color: Juego.color_vacio,
                   taken: false,
                 };
@@ -360,8 +360,8 @@ class Juego {
           taken: false,
         };
         // Overlap existing piece if any
-        if (this.existingPieces[y][x].taken) {
-          this.board[y][x].color = this.existingPieces[y][x].color;
+        if (this.piezasExistentes[y][x].taken) {
+          this.board[y][x].color = this.piezasExistentes[y][x].color;
         }
       }
     }
@@ -542,16 +542,16 @@ class Juego {
 
   tableroDeInicioYPiezasExistentes() { //Tablero de inicio y piezas existentes-initBoardAndExistingPieces
     this.board = [];
-    this.existingPieces = [];//Piezas existentes
+    this.piezasExistentes = [];//Piezas existentes - existingPieces
     for (let y = 0; y < Juego.filas; y++) {
       this.board.push([]);
-      this.existingPieces.push([]);
+      this.piezasExistentes.push([]);
       for (let x = 0; x < Juego.columnas; x++) {
         this.board[y].push({
           color: Juego.color_vacio,
           taken: false,
         });
-        this.existingPieces[y].push({
+        this.piezasExistentes[y].push({
           taken: false,
           color: Juego.color_vacio,
         });
@@ -586,9 +586,9 @@ class Juego {
 
   // It returns true even if the point is not valid (for example if it is out of limit, because it is not the function's responsibility)
   isEmptyPoint(x, y) {
-    if (!this.existingPieces[y]) return true;
-    if (!this.existingPieces[y][x]) return true;
-    if (this.existingPieces[y][x].taken) {
+    if (!this.piezasExistentes[y]) return true;
+    if (!this.piezasExistentes[y][x]) return true;
+    if (this.piezasExistentes[y][x].taken) {
       return false;
     } else {
       return true;
@@ -670,8 +670,8 @@ class Juego {
     this.currentFigure.incrementRotationIndex();
   }
 
-  async askUserConfirmResetGame() {
-    this.pauseGame();
+  async preguntarAlUsuarioConfirmarReinicioDelJuego() {//Preguntar al usuario Confirmar reinicio del juego - askUserConfirmResetGame
+    this.pausarJuego();
     const result = await Swal.fire({
       title: "Reiniciar",
       text: "¿Quieres reiniciar el juego?",
@@ -683,9 +683,9 @@ class Juego {
       confirmButtonText: "Sí",
     });
     if (result.value) {
-      this.resetGame();
+      this.resetJuego();
     } else {
-      this.resumeGame();
+      this.reanudarElJuego();
     }
   }
 }
