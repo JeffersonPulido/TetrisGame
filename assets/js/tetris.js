@@ -15,7 +15,7 @@ class Juego {
   // Animation time when a row is being deleted
   static tiempo_animacionDelete = 500;
   // Score to add when a square dissapears (for each square)
-  static PER_SQUARE_SCORE = 1;
+  static puntaje_por_cuadrado = 1;
   static COLORS = [
     "#ffd300",
     "#de38c8",
@@ -249,7 +249,7 @@ class Juego {
       clearInterval(this.intervalId);
       this.intervalId = setInterval(this.mainLoop.bind(this), Juego.velocidad_pieza);
     }
-    this.score += Juego.PER_SQUARE_SCORE * Juego.columnas * rows.length;
+    this.score += Juego.puntaje_por_cuadrado * Juego.columnas * rows.length;
     this.refreshScore();
   }
 
