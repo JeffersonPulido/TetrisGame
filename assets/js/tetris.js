@@ -416,7 +416,7 @@ class Juego {
 
   initSounds() {
     this.sounds.background = Utils.loadSound(
-      "../../assets/sounds/NewDonkBit.mp3",//musica
+      "../../assets/sounds/TetrisMusicClasic.mp3",//musica
       true
     );
     this.sounds.success = Utils.loadSound("../../assets/sounds/success.wav");//llena fila
