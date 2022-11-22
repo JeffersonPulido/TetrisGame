@@ -45,9 +45,6 @@ https://www.figma.com/file/WYdB8JZptNd4P2PeBlIyjF/Tetris?node-id=0%3A1&t=tpAcTEJ
 - [@LilyCastillo](https://github.com/lilajoha29)
 
 ## Preview
-![Home Page](https://raw.githubusercontent.com/JeffersonPulido/SemillasProgr-mate/master/assets/images/home.png)
-![Home Mobile](https://raw.githubusercontent.com/JeffersonPulido/SemillasProgr-mate/master/assets/images/home.png)
-![Indicadores Page](https://raw.githubusercontent.com/JeffersonPulido/SemillasProgr-mate/master/assets/images/home.png)
-![Checklist Page](https://raw.githubusercontent.com/JeffersonPulido/SemillasProgr-mate/master/assets/images/home.png)
+![Home Page](https://raw.githubusercontent.com/JeffersonPulido/TetrisGame/master/assets/img/Portada.png)
 
 
