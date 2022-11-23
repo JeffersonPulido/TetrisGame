@@ -251,7 +251,7 @@ class Juego {
     const calculo = puntaje * columna;
     return calculo; 
   }
-
+  
   añadirPuntaje(rows) {
     if (Juego.velocidad_pieza > 0) {
       Juego.velocidad_pieza -= rows.length * 20;
@@ -728,3 +728,5 @@ const game = new Juego("canvas");
 document.querySelector("#reset").addEventListener("click", () => {
   game.preguntarConfirmacionReset();
 });
+
+module.exports = calcularPuntaje;
