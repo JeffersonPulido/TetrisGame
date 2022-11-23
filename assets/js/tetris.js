@@ -245,6 +245,12 @@ class Juego {
       }
     }
   }
+  
+  //Funcion que se testea
+  calcularPuntaje(puntaje, columna){
+    const calculo = puntaje * columna;
+    return calculo; 
+  }
 
   añadirPuntaje(rows) {
     if (Juego.velocidad_pieza > 0) {
@@ -255,7 +261,9 @@ class Juego {
         Juego.velocidad_pieza
       );
     }
-    this.score += Juego.puntaje_por_cuadro * Juego.columnas * rows.length;
+    this.calculoPuntaje = this.calcularPuntaje(Juego.puntaje_por_cuadro, Juego.columnas);
+    this.score +=  this.calculoPuntaje * rows.length;
+    // this.score += Juego.puntaje_por_cuadro * Juego.columnas * rows.length;
     this.refrescarPuntaje();
   }
 
@@ -425,9 +433,9 @@ class Juego {
       "../../assets/sounds/TetrisMusicClasic.mp3",
       true
     );
-    this.sounds.success = Utils.cargarSonido("../../assets/sounds/success.wav");//llena fila
-    this.sounds.denied = Utils.cargarSonido("../../assets/sounds/denied.wav");//error o no movimiento
-    this.sounds.tap = Utils.cargarSonido("../../assets/sounds/tap.wav");//game over
+    this.sounds.success = Utils.cargarSonido("../../assets/sounds/success.wav"); //llena fila
+    this.sounds.denied = Utils.cargarSonido("../../assets/sounds/denied.wav"); //error o no movimiento
+    this.sounds.tap = Utils.cargarSonido("../../assets/sounds/tap.wav"); //game over
   }
 
   iniciarDOM() {
@@ -454,7 +462,6 @@ class Juego {
   }
 
   figuraRandom() {
-
     switch (Utils.numeroRandomRango(1, 7)) {
       case 1:
         /*
@@ -660,9 +667,7 @@ class Utils {
   };
 
   static colorRandom() {
-    return Juego.colores[
-      Utils.numeroRandomRango(0, Juego.colores.length - 1)
-    ];
+    return Juego.colores[Utils.numeroRandomRango(0, Juego.colores.length - 1)];
   }
 
   static cargarSonido(src, loop) {
